@@ -1,12 +1,15 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import AppSafeView from "../../components/views/AppSafeView";
+import HomeHeader from "../../components/headers/HomeHeader";
+import { AppFonts } from "../../styles/fonts";
 
 const HomeScreen = () => {
   return (
-    <SafeAreaView>
-      <Text>HomeScreen</Text>
-    </SafeAreaView>
+    <AppSafeView>
+      <HomeHeader />
+      <Text style={{ fontSize: 60 }}>HomeScreen</Text>
+    </AppSafeView>
   );
 };
 
