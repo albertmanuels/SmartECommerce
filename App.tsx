@@ -1,20 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import FlashMessage from "react-native-flash-message";
+import AuthStack from "./src/navigation/AuthStack";
+import { NavigationContainer } from "@react-navigation/native";
+import MainAppStack from "./src/navigation/MainAppStack";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+    <NavigationContainer>
+      <FlashMessage position="top" />
       <StatusBar style="auto" />
-    </View>
+      <MainAppStack />
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
