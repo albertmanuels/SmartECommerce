@@ -6,10 +6,14 @@ import { AppColors } from "../styles/AppColors";
 import { s, vs } from "react-native-size-matters";
 import { Ionicons } from "@expo/vector-icons";
 import { IS_Android } from "../constants/constants";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 const Tab = createBottomTabNavigator();
 
 export default function MainAppBottomTabs() {
+  const { items } = useSelector((state: RootState) => state.cartSlice);
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -40,6 +44,7 @@ export default function MainAppBottomTabs() {
             <Ionicons color={color} size={size} name="cart" />
           ),
           title: "Cart",
+          tabBarBadge: items.length > 0 ? items.length : undefined,
         }}
       />
       <Tab.Screen

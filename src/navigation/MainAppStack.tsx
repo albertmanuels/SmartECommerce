@@ -2,7 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import AuthStack from "./AuthStack";
 import MainAppBottomTabs from "./MainAppBottomTabs";
-import CheckoutScreen from "../components/cart/CheckoutScreen";
+import CheckoutScreen from "../screens/cart/CheckoutScreen";
 import MyOrdersScreen from "../screens/profile/my-orders/MyOrdersScreen";
 
 const Stack = createStackNavigator();

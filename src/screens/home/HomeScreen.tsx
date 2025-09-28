@@ -4,8 +4,12 @@ import AppSafeView from "../../components/views/AppSafeView";
 import HomeHeader from "../../components/headers/HomeHeader";
 import ProductCard from "../../components/cards/ProductCard";
 import { products } from "../../data/products";
+import { useDispatch } from "react-redux";
+import { addItemToCart } from "../../store/reducers/cartSlice";
 
 const HomeScreen = () => {
+  const dispatch = useDispatch();
+
   return (
     <AppSafeView>
       <HomeHeader />
@@ -23,7 +27,7 @@ const HomeScreen = () => {
             title={item.title}
             price={item.price}
             imageURL={item.imageURL}
-            onAddToCartPress={() => {}}
+            onAddToCartPress={() => dispatch(addItemToCart(item))}
           />
         )}
         showsVerticalScrollIndicator={false}

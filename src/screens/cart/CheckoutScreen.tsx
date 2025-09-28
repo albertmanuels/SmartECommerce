@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
-import AppSafeView from "../views/AppSafeView";
+import AppSafeView from "../../components/views/AppSafeView";
 import {
   commonStyles,
   sharedPaddingHorizontal,
 } from "../../styles/sharedStyles";
 import { AppColors } from "../../styles/AppColors";
 import { s, vs } from "react-native-size-matters";
-import AppTextInput from "../inputs/AppTextInput";
-import AppButton from "../buttons/AppButton";
+import AppTextInput from "../../components/inputs/AppTextInput";
+import AppButton from "../../components/buttons/AppButton";
 import { IS_Android, IS_IOS } from "../../constants/constants";
 
 const CheckoutScreen = () => {
