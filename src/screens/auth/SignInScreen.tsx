@@ -1,42 +1,64 @@
 import { Image, StyleSheet, View } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { AppColors } from "../../styles/AppColors";
 import { sharedPaddingHorizontal } from "../../styles/sharedStyles";
 import { IMAGES } from "../../constants/images-path";
 import { s, vs } from "react-native-size-matters";
-import AppTextInput from "../../components/inputs/AppTextInput";
 import AppButton from "../../components/buttons/AppButton";
 import AppText from "../../components/Texts/AppText";
 import { useNavigation } from "@react-navigation/native";
+import AppTextInputController from "../../components/inputs/AppTextInputController";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup
+  .object({
+    email: yup
+      .string()
+      .email("Please enter a valid email")
+      .required("Email is required"),
+    password: yup
+      .string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
+  })
+  .required();
+
+type FormData = yup.InferType<typeof schema>;
 
 const SignInScreen = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const navigation = useNavigation();
+
+  const { control, handleSubmit } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSignIn = (formData: FormData) => {
+    if (!formData) return;
+    navigation.navigate("MainAppBottomTabs" as never);
+    console.log(formData);
+  };
 
   return (
     <View style={styles.container}>
       <Image source={IMAGES.appLogo} style={styles.logo} />
-
-      <AppTextInput
+      <AppTextInputController
+        control={control}
+        name="email"
         placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
         keyboardType="email-address"
       />
-      <AppTextInput
+      <AppTextInputController
+        control={control}
+        name="password"
         placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
         secureTextEntry
       />
       <AppText variant="bold" style={styles.appName}>
         Smart E-Commerce
       </AppText>
-      <AppButton
-        title="Login"
-        onPress={() => navigation.navigate("MainAppBottomTabs" as never)}
-      />
+      <AppButton title="Login" onPress={handleSubmit(onSignIn)} />
       <AppButton
         title="Sign Up"
         onPress={() => navigation.navigate("SignUpScreen" as never)}

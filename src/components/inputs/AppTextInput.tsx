@@ -27,6 +27,7 @@ const AppTextInput: FC<AppTextInputProps> = ({
       placeholder={placeholder}
       secureTextEntry={secureTextEntry}
       keyboardType={keyboardType}
+      autoCapitalize="none"
       style={[styles.input, style]}
     />
   );
