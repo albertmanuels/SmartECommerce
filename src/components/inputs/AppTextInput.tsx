@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import { s, vs } from "react-native-size-matters";
 import { AppColors } from "../../styles/AppColors";
 
-interface AppTextInputProps {
+export interface AppTextInputProps {
   value: string;
   onChangeText: (text: string) => void;
   placeholder?: string;

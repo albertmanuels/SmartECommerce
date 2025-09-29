@@ -60,6 +60,7 @@ const CartScreen = () => {
               />
             )}
             keyExtractor={(item) => item.id.toString()}
+            showsVerticalScrollIndicator={false}
           />
           <TotalView
             itemsPrice={totalProductsPricesSum}
