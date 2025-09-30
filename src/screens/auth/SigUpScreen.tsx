@@ -11,6 +11,10 @@ import * as yup from "yup";
 import AppTextInputController from "../../components/inputs/AppTextInputController";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../config/firebase";
+import { showMessage } from "react-native-flash-message";
+import { FirebaseError } from "firebase/app";
 
 const schema = yup
   .object({
@@ -38,10 +42,42 @@ const SignUpScreen = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSignUp = (formData: FormData) => {
-    if (!formData) return;
-    Alert.alert("Account created successfully");
-    console.log(formData);
+  const onSignUp = async (formData: FormData) => {
+    try {
+      if (!formData) throw new Error("Invalid form data");
+
+      await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+
+      Alert.alert("User created successfully");
+      navigation.navigate("MainAppBottomTabs" as never);
+    } catch (error) {
+      let errorMessage = "";
+      const firebaseError = error as FirebaseError;
+
+      switch (firebaseError.code) {
+        case "auth/email-already-in-use":
+          errorMessage = "This email is already in use";
+          break;
+        case "auth/invalid-email":
+          errorMessage = "The email address is invalid";
+          break;
+        case "auth/weak-password":
+          errorMessage = "The password is too weak";
+          break;
+        default:
+          errorMessage = "An error occurred during sign-up";
+          break;
+      }
+
+      showMessage({
+        type: "danger",
+        message: errorMessage,
+      });
+    }
   };
 
   return (

@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
-import { environment } from "./environment";
-
+import Constants from 'expo-constants';
 // Optionally import the services that you want to use
 // import {...} from 'firebase/database';
 // import {...} from 'firebase/firestore';
@@ -10,12 +9,12 @@ import { environment } from "./environment";
 
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: environment.FB_API_KEY,
-  authDomain: environment.FB_AUTH_DOMAIN,
-  projectId: environment.FB_PROJECT_ID,
-  storageBucket: environment.FB_STORAGE_BUCKET,
-  messagingSenderId: environment.FB_MESSAGING_SENDER_ID,
-  appId: environment.FB_APP_ID,
+  apiKey: Constants.expoConfig?.extra?.FIREBASE_API_KEY,
+  authDomain: Constants.expoConfig?.extra?.FIREBASE_AUTH_DOMAIN,
+  projectId: Constants.expoConfig?.extra?.FIREBASE_PROJECT_ID,
+  storageBucket: Constants.expoConfig?.extra?.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: Constants.expoConfig?.extra?.FIREBASE_MESSAGING_SENDER_ID,
+  appId: Constants.expoConfig?.extra?.FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
