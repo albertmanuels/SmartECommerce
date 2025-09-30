@@ -11,6 +11,10 @@ import AppTextInputController from "../../components/inputs/AppTextInputControll
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../config/firebase";
+import { showMessage } from "react-native-flash-message";
+import { FirebaseError } from "firebase/app";
 
 const schema = yup
   .object({
@@ -34,10 +38,36 @@ const SignInScreen = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSignIn = (formData: FormData) => {
-    if (!formData) return;
-    navigation.navigate("MainAppBottomTabs" as never);
-    console.log(formData);
+  const onSignIn = async (formData: FormData) => {
+    try {
+      if (!formData) throw new Error("Invalid form data");
+
+      const credential = await signInWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+
+      if (!credential) throw new Error("No user found");
+
+      navigation.navigate("MainAppBottomTabs" as never);
+    } catch (error) {
+      let errorMessage = "";
+      const firebaseError = error as FirebaseError;
+
+      if (firebaseError.code === "auth/user-not-found") {
+        errorMessage = "User not found";
+      } else if (firebaseError.code === "auth/invalid-credential") {
+        errorMessage = "Wrong email or password";
+      } else {
+        errorMessage = "An error occurred during sign-in";
+      }
+
+      showMessage({
+        type: "danger",
+        message: errorMessage,
+      });
+    }
   };
 
   return (
