@@ -59,7 +59,7 @@ const CartScreen = () => {
                 onDecreasePress={() => dispatch(removeItemFromCart(item))}
               />
             )}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => String(item.id)}
             showsVerticalScrollIndicator={false}
           />
           <TotalView

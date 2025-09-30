@@ -1,9 +1,11 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+
 import Constants from 'expo-constants';
 // Optionally import the services that you want to use
 // import {...} from 'firebase/database';
-// import {...} from 'firebase/firestore';
+
 // import {...} from 'firebase/functions';
 // import {...} from 'firebase/storage';
 
@@ -20,6 +22,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
+const db = getFirestore(app);
 
-export { auth };
-
+export { auth, db };
